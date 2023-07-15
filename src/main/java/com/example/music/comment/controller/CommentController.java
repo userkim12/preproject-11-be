@@ -20,11 +20,14 @@ public class CommentController {
         return ResponseEntity.ok(CommentResponseDto.of(comment));
     }
 
-    /*
+
     @DeleteMapping("/{postId}/comments/{commentId}")
-    public ResponseEntity deleteComment(){
+    public ResponseEntity deleteComment(@PathVariable("postId") Long postId, @PathVariable("commentId") Long commentId){
+        commentService.deleteComment(commentId);
+        return ResponseEntity.ok().build();
+        //body 없이 !
     }
-    */
+
 
 
 }
