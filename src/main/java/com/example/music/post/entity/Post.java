@@ -31,7 +31,9 @@ public class Post extends BaseTimeEntity {
     private String content;
     @Column
     private int likes;
-    private String category;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private CategoryEnum category;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> commentList = new ArrayList<>();
