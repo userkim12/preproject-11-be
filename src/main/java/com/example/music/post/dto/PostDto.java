@@ -9,6 +9,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 public class PostDto {
     @Getter
     public static class Request {
@@ -31,7 +32,8 @@ public class PostDto {
         }
     }
     @Getter
-    public static class SingleResponse {
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Response {
         private Long postId;
         private String title;
         private String content;
@@ -39,13 +41,11 @@ public class PostDto {
         private String yUrl;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-
-        @JsonInclude(JsonInclude.Include.NON_NULL)
         private List<Comment> commentList;
         private int likes;
 
 
-        private SingleResponse(Post post) {
+        private Response(Post post) {
             this.postId = post.getPostId();
             this.title = post.getTitle();
             this.content = post.getContent();
@@ -57,37 +57,33 @@ public class PostDto {
             this.likes = post.getLikes();
         }
 
-
-        public static SingleResponse of(Post post) {
-            return new SingleResponse(post);
-        }
-    }
-
-    @Getter
-    public static class WithoutCommentResponse {
-        private Long postId;
-        private String title;
-        private String content;
-        private String category;
-        private String yUrl;
-        private LocalDateTime createdAt;
-        private LocalDateTime modifiedAt;
-        private int likes;
-
-
-        private WithoutCommentResponse(Post post) {
-            this.postId = post.getPostId();
-            this.title = post.getTitle();
-            this.content = post.getContent();
-            this.category = post.getCategory();
-            this.createdAt = post.getCreatedAt();
-            this.modifiedAt = post.getModifiedAt();
-            this.yUrl = post.getYUrl();
-            this.likes = post.getLikes();
+        @Builder
+        private Response(Long postId, String title, String content, String category, String yUrl, LocalDateTime createdAt, LocalDateTime modifiedAt, int likes) {
+            this.postId = postId;
+            this.title = title;
+            this.content = content;
+            this.category = category;
+            this.yUrl = yUrl;
+            this.createdAt = createdAt;
+            this.modifiedAt = modifiedAt;
+            this.likes = likes;
         }
 
-        public static WithoutCommentResponse of(Post post) {
-            return new WithoutCommentResponse(post);
+        public static Response of(Post post) {
+            return new Response(post);
+        }
+
+        public static Response nonCommentOf(Post post) {
+            return Response.builder()
+                    .postId(post.getPostId())
+                    .title(post.getTitle())
+                    .content(post.getContent())
+                    .category(post.getCategory())
+                    .yUrl(post.getYUrl())
+                    .createdAt(post.getCreatedAt())
+                    .modifiedAt(post.getModifiedAt())
+                    .likes(post.getLikes())
+                    .build();
         }
     }
 }

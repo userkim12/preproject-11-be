@@ -95,9 +95,9 @@ public class PostService {
         return true;
     }
 
-    public List<PostDto.WithoutCommentResponse> toResponseDtos(List<Post> postList) {
+    public List<PostDto.Response> toResponseDtos(List<Post> postList) {
 
-        return postList.stream().map(PostDto.WithoutCommentResponse::of).toList();
+        return postList.stream().map(PostDto.Response::nonCommentOf).toList();
     }
 
     @Scheduled(cron = "0 0 1 * * *") //1분마다 실행, Top 5 게시물 조회시에 일정한 시간마다 갱신하기 ?!? -> 주기 : 매일 새벽 1시
