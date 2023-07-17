@@ -24,6 +24,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
+
 //    @Transactional
 //    public Post updatePost(Long postId, PostRequestDto postRequestDto) {
 //        Post originalPost = verifyPostExists(postId);

@@ -1,6 +1,7 @@
 package com.example.music.post.dto;
 
 import com.example.music.comment.entity.Comment;
+import com.example.music.post.entity.CategoryEnum;
 import com.example.music.post.entity.Post;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -27,7 +28,7 @@ public class PostDto {
                     .title(title)
                     .content(content)
                     .yUrl(yUrl)
-                    .category(category)
+                    .category(CategoryEnum.nameOf(category))
                     .build();
         }
     }
@@ -49,7 +50,7 @@ public class PostDto {
             this.postId = post.getPostId();
             this.title = post.getTitle();
             this.content = post.getContent();
-            this.category = post.getCategory();
+            this.category = post.getCategory().getKorean();
             this.createdAt = post.getCreatedAt();
             this.modifiedAt = post.getModifiedAt();
             this.commentList = post.getCommentList();
@@ -78,7 +79,7 @@ public class PostDto {
                     .postId(post.getPostId())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .category(post.getCategory())
+                    .category(post.getCategory().name())
                     .yUrl(post.getYUrl())
                     .createdAt(post.getCreatedAt())
                     .modifiedAt(post.getModifiedAt())
