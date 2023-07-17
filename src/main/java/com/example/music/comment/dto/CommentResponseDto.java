@@ -1,7 +1,6 @@
 package com.example.music.comment.dto;
 
 import com.example.music.comment.entity.Comment;
-import com.example.music.post.dto.PostResponseDto;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
