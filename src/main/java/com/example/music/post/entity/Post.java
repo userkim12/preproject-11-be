@@ -1,5 +1,6 @@
 package com.example.music.post.entity;
 
+import com.example.music.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -29,6 +32,9 @@ public class Post {
     private int likes;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> commentList = new ArrayList<>();
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
