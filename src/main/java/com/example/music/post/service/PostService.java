@@ -4,6 +4,7 @@ import com.example.music.post.dto.PostDto;
 import com.example.music.post.entity.Post;
 import com.example.music.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -99,8 +100,8 @@ public class PostService {
         return postList.stream().map(PostDto.WithoutCommentResponse::of).toList();
     }
 
+    @Scheduled(cron = "0 0 1 * * *") //1분마다 실행, Top 5 게시물 조회시에 일정한 시간마다 갱신하기 ?!? -> 주기 : 매일 새벽 1시
     public List<Post> getTop5() {
-
         return postRepository.findTop5ByOrderByLikesDesc();
     }
 }
