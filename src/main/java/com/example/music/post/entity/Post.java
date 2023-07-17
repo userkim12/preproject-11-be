@@ -1,5 +1,6 @@
 package com.example.music.post.entity;
 
+import com.example.music.audit.BaseTimeEntity;
 import com.example.music.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
@@ -30,8 +31,7 @@ public class Post {
     private String content;
     @Column
     private int likes;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private String category;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> commentList = new ArrayList<>();

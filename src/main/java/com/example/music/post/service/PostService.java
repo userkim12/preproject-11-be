@@ -1,13 +1,14 @@
 package com.example.music.post.service;
 
-import com.example.music.post.dto.PostRequestDto;
+import com.example.music.post.dto.PostDto;
 import com.example.music.post.entity.Post;
 import com.example.music.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class PostService {
     private static final int DOWN = -1;
     private final PostRepository postRepository;
 
-    public Post createPost(PostRequestDto postRequestDto) {
+    public Post createPost(PostDto.Request postRequestDto) {
         Post post = postRequestDto.toPostEntity();
 
         return postRepository.save(post);
@@ -47,7 +48,7 @@ public class PostService {
 
     public List<Post> findAllBoards() {
 
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByCreatedAtDesc();
     }
 
 //    public void deletePost(Long postId) {
@@ -61,7 +62,12 @@ public class PostService {
 //    }
 
     public List<Post> searchPost(String postTitle) {
-        return postRepository.findAllByTitle(postTitle);
+        return postRepository.findByTitleLikeOrderByCreatedAtDesc("%" + postTitle + "%");
+    }
+
+    public List<Post> getByCategory(String categoryName) {
+
+        return postRepository.findAllByCategoryOrderByCreatedAtDesc(categoryName);
     }
 
     public void likeUp(Long postId) {
@@ -86,5 +92,15 @@ public class PostService {
         }
 
         return true;
+    }
+
+    public List<PostDto.WithoutCommentResponse> toResponseDtos(List<Post> postList) {
+
+        return postList.stream().map(PostDto.WithoutCommentResponse::of).toList();
+    }
+
+    public List<Post> getTop5() {
+
+        return postRepository.findTop5ByOrderByLikesDesc();
     }
 }

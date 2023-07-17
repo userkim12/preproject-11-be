@@ -1,5 +1,6 @@
 package com.example.music.comment.entity;
 
+import com.example.music.audit.BaseTimeEntity;
 import com.example.music.comment.dto.CommentRequestDto;
 import com.example.music.post.entity.Post;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+public class Comment extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +22,6 @@ public class Comment {
 
     @Column(nullable = false)
     private String content;
-
-    @Column
-    private LocalDateTime createdAt;
-
-    @Column
-    private LocalDateTime modifiedAt;
 
     @ManyToOne
     @JoinColumn(name = "post_id")

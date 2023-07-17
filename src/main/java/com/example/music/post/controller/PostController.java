@@ -1,7 +1,6 @@
 package com.example.music.post.controller;
 
-import com.example.music.post.dto.PostRequestDto;
-import com.example.music.post.dto.PostResponseDto;
+import com.example.music.post.dto.PostDto;
 import com.example.music.post.entity.Post;
 import com.example.music.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -16,57 +15,68 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
     @PostMapping
-    public ResponseEntity<PostResponseDto> post(@RequestBody PostRequestDto postRequestDto) {
+    public ResponseEntity<PostDto.SingleResponse> post(@RequestBody PostDto.Request postRequestDto) {
         Post post = postService.createPost(postRequestDto);
 
-        return ResponseEntity.ok(PostResponseDto.of(post));
+        return ResponseEntity.ok(PostDto.SingleResponse.of(post));
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<PostResponseDto> put(@PathVariable Long postId,
-                              @RequestBody PostRequestDto postRequestDto) {
+    public ResponseEntity<PostDto.SingleResponse> put(@PathVariable Long postId,
+                              @RequestBody PostDto.Request postRequestDto) {
 //        Post post = postService.updatePost(postId, postRequestDto);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity get(@PathVariable Long postId) {
+    public ResponseEntity<PostDto.SingleResponse> get(@PathVariable Long postId) {
         Post findPost = postService.findBoard(postId);
 
-        return ResponseEntity.ok(PostResponseDto.of(findPost));
+        return ResponseEntity.ok(PostDto.SingleResponse.of(findPost));
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponseDto>> getAll() {
+    public ResponseEntity<List<PostDto.WithoutCommentResponse>> getAll() {
         List<Post> postList = postService.findAllBoards();
 
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(postService.toResponseDtos(postList));
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity delete(@PathVariable Long postId) {
+    public ResponseEntity<?> delete(@PathVariable Long postId) {
 //        postService.deletePost(postId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{postTitle}")
-    public ResponseEntity search(@PathVariable String postTitle) {
+    @GetMapping("/search/{postTitle}")
+    public ResponseEntity<List<PostDto.WithoutCommentResponse>> search(@PathVariable String postTitle) {
         List<Post> postList = postService.searchPost(postTitle);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(postService.toResponseDtos(postList));
     }
 
     @PostMapping("/{postId}/likes")
-    public ResponseEntity likeUp(@PathVariable Long postId) {
+    public ResponseEntity<?> likeUp(@PathVariable Long postId) {
         postService.likeUp(postId);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{postId}/likes")
-    public ResponseEntity likeDown(@PathVariable Long postId) {
+    public ResponseEntity<?> likeDown(@PathVariable Long postId) {
         postService.likeDown(postId);
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/category/{category-name}")
+    public ResponseEntity<List<PostDto.WithoutCommentResponse>> getByCategory(@PathVariable("category-name") String categoryName) {
+        List<Post> postList = postService.getByCategory(categoryName);
+
+        return ResponseEntity.ok(postService.toResponseDtos(postList));
+    }
+
+    @GetMapping("/top5")
+    public ResponseEntity getTop5() {
+        List<Post> postList = postService.getTop5();
+        return ResponseEntity.ok(postService.toResponseDtos(postList));
+    }
 }
