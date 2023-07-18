@@ -1,6 +1,7 @@
 package com.example.music.post.service;
 
 import com.example.music.post.dto.PostDto;
+import com.example.music.post.entity.CategoryEnum;
 import com.example.music.post.entity.Post;
 import com.example.music.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -68,8 +69,9 @@ public class PostService {
     }
 
     public List<Post> getByCategory(String categoryName) {
-
-        return postRepository.findAllByCategoryOrderByCreatedAtDesc(categoryName);
+        System.out.println("++++++++++++++++++"+categoryName+"++++++++++++++++++");
+        CategoryEnum getCategory = CategoryEnum.nameOf(categoryName);
+        return postRepository.findAllByCategoryOrderByCreatedAtDesc(getCategory);
     }
 
     public void likeUp(Long postId) {

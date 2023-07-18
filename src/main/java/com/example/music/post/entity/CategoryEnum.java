@@ -15,24 +15,25 @@ public enum CategoryEnum {
 
 
     @Getter
-    private final String korean;
+    private final String englishName;
 
     CategoryEnum(String category) {
-        this.korean = category;
+        this.englishName = category;
     }
 
     public static class Category {
-        public static final String KAYO = "가요";
-        public static final String POP = "팝";
-        public static final String ROCK = "락";
+        public static final String KAYO = "KAYO";
+        public static final String POP = "POP";
+        public static final String ROCK = "ROCK";
         public static final String EDM = "EDM";
-        public static final String JAZZCLASSIC = "재즈/클래식";
+        public static final String JAZZCLASSIC = "JAZZ-CLASSIC";
         public static final String JPOP = "J-POP";
     }
 
-    public static CategoryEnum nameOf(String korean) {
+    public static CategoryEnum nameOf(String englishName) {
         for(CategoryEnum e: CategoryEnum.values()) {
-            if(e.getKorean().equals(korean))
+            System.out.println(e.toString());
+            if(e.getEnglishName().equals(englishName))
                 return e;
         }
         return null;

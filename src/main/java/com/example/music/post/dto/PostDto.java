@@ -52,7 +52,7 @@ public class PostDto {
             this.postId = post.getPostId();
             this.title = post.getTitle();
             this.content = post.getContent();
-            this.category = post.getCategory().getKorean();
+            this.category = post.getCategory().getEnglishName();
             this.createdAt = post.getCreatedAt();
             this.modifiedAt = post.getModifiedAt();
             this.commentList = post.getCommentList() == null ? null : post.getCommentList().stream().map(CommentResponseDto::of).toList();
@@ -81,7 +81,7 @@ public class PostDto {
                     .postId(post.getPostId())
                     .title(post.getTitle())
                     .content(post.getContent())
-                    .category(post.getCategory().getKorean())
+                    .category(post.getCategory().getEnglishName())
                     .yUrl(post.getYUrl())
                     .createdAt(post.getCreatedAt())
                     .modifiedAt(post.getModifiedAt())
