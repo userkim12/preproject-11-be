@@ -1,9 +1,11 @@
 package com.example.music.post.dto;
 
+import com.example.music.comment.dto.CommentResponseDto;
 import com.example.music.comment.entity.Comment;
 import com.example.music.post.entity.CategoryEnum;
 import com.example.music.post.entity.Post;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -42,7 +44,7 @@ public class PostDto {
         private String yUrl;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-        private List<Comment> commentList;
+        private List<CommentResponseDto> commentList;
         private int likes;
 
 
@@ -53,7 +55,7 @@ public class PostDto {
             this.category = post.getCategory().getKorean();
             this.createdAt = post.getCreatedAt();
             this.modifiedAt = post.getModifiedAt();
-            this.commentList = post.getCommentList();
+            this.commentList = post.getCommentList().stream().map(CommentResponseDto::of).toList();
             this.yUrl = post.getYUrl();
             this.likes = post.getLikes();
         }
