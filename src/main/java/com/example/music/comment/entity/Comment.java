@@ -3,12 +3,11 @@ package com.example.music.comment.entity;
 import com.example.music.audit.BaseTimeEntity;
 import com.example.music.comment.dto.CommentRequestDto;
 import com.example.music.post.entity.Post;
+import com.example.music.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -31,13 +30,14 @@ public class Comment extends BaseTimeEntity {
         this.content = commentRequestDto.getContent();
     }
 
-
-    /*
     @ManyToOne
     private User user;
-     */
 
     public void connectPost(Post post) {
         this.post = post;
+    }
+
+    public void connectUser(User user) {
+        this.user = user;
     }
 }

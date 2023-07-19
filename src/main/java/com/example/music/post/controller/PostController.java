@@ -5,6 +5,8 @@ import com.example.music.post.entity.Post;
 import com.example.music.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,18 +16,22 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
     private final PostService postService;
+
     @PostMapping
-    public ResponseEntity<PostDto.Response> post(@RequestBody PostDto.Request postRequestDto) {
-        Post post = postService.createPost(postRequestDto);
+    public ResponseEntity<PostDto.Response> post(@AuthenticationPrincipal UserDetails userDetails,
+                                                 @RequestBody PostDto.Request postRequestDto) {
+        System.out.println("aaaaa");
+        Post post = postService.createPost(userDetails, postRequestDto);
 
         return ResponseEntity.ok(PostDto.Response.of(post));
     }
 
     @PutMapping("/{postId}")
-    public ResponseEntity<PostDto.Response> put(@PathVariable Long postId,
-                              @RequestBody PostDto.Request postRequestDto) {
-//        Post post = postService.updatePost(postId, postRequestDto);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PostDto.Response> put(@AuthenticationPrincipal UserDetails userDetails,
+                                                @PathVariable Long postId,
+                                                @RequestBody PostDto.Request postRequestDto) {
+        Post post = postService.updatePost(userDetails, postId, postRequestDto);
+        return ResponseEntity.ok(PostDto.Response.of(post));
     }
 
     @GetMapping("/{postId}")
@@ -43,8 +49,9 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<?> delete(@PathVariable Long postId) {
-//        postService.deletePost(postId);
+    public ResponseEntity<?> delete(@AuthenticationPrincipal UserDetails userDetails,
+                                    @PathVariable Long postId) {
+        postService.deletePost(userDetails, postId);
         return ResponseEntity.ok().build();
     }
 
