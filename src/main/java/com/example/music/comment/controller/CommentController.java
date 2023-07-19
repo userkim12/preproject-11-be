@@ -30,7 +30,7 @@ public class CommentController {
     public ResponseEntity<?> deleteComment(@AuthenticationPrincipal UserDetails userDetails,
                                            @PathVariable("commentId") Long commentId){
         commentService.deleteComment(userDetails, commentId);
-        return ResponseEntity.ok(HttpStatus.NO_CONTENT);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         //body 없이 !
     }
 
