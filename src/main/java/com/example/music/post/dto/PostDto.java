@@ -4,6 +4,7 @@ import com.example.music.comment.dto.CommentResponseDto;
 import com.example.music.comment.entity.Comment;
 import com.example.music.post.entity.CategoryEnum;
 import com.example.music.post.entity.Post;
+import com.example.music.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
@@ -25,12 +26,13 @@ public class PostDto {
             return yUrl;
         }
 
-        public Post toPostEntity() {
+        public Post toPostEntity(User user) {
             return Post.builder()
                     .title(title)
                     .content(content)
                     .yUrl(yUrl)
                     .category(CategoryEnum.nameOf(category))
+                    .user(user)
                     .build();
         }
     }
@@ -42,6 +44,7 @@ public class PostDto {
         private String content;
         private String category;
         private String yUrl;
+        private String username;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private List<CommentResponseDto> commentList;
@@ -58,10 +61,11 @@ public class PostDto {
             this.commentList = post.getCommentList() == null ? null : post.getCommentList().stream().map(CommentResponseDto::of).toList();
             this.yUrl = post.getYUrl();
             this.likes = post.getLikes();
+            this.username = post.getUser().getUsername();
         }
 
         @Builder
-        private Response(Long postId, String title, String content, String category, String yUrl, LocalDateTime createdAt, LocalDateTime modifiedAt, int likes) {
+        private Response(String username, Long postId, String title, String content, String category, String yUrl, LocalDateTime createdAt, LocalDateTime modifiedAt, int likes) {
             this.postId = postId;
             this.title = title;
             this.content = content;
@@ -70,6 +74,7 @@ public class PostDto {
             this.createdAt = createdAt;
             this.modifiedAt = modifiedAt;
             this.likes = likes;
+            this.username = username;
         }
 
         public static Response of(Post post) {
@@ -86,6 +91,7 @@ public class PostDto {
                     .createdAt(post.getCreatedAt())
                     .modifiedAt(post.getModifiedAt())
                     .likes(post.getLikes())
+                    .username(post.getUser().getUsername())
                     .build();
         }
     }
