@@ -20,6 +20,7 @@ public class PostController {
     @PostMapping
     public ResponseEntity<PostDto.Response> post(@AuthenticationPrincipal UserDetails userDetails,
                                                  @RequestBody PostDto.Request postRequestDto) {
+        System.out.println("aaaaa");
         Post post = postService.createPost(userDetails, postRequestDto);
 
         return ResponseEntity.ok(PostDto.Response.of(post));

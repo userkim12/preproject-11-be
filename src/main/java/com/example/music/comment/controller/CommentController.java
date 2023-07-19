@@ -17,9 +17,8 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
     private final CommentService commentService;
-    @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<CommentResponseDto> createComment(@PathVariable("postId") Long postId,
-                                                            @AuthenticationPrincipal UserDetails userDetails,
+    @PostMapping("/comments")
+    public ResponseEntity<CommentResponseDto> createComment(@AuthenticationPrincipal UserDetails userDetails,
                                                             @RequestBody CommentRequestDto commentRequestDto){
         // 여기 수정중
         Comment comment = commentService.createComment(userDetails, commentRequestDto);
