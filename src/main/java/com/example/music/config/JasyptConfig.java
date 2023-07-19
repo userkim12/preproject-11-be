@@ -1,4 +1,4 @@
-package com.example.music.config;
+/*package com.example.music.config;
 
 import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,3 +15,4 @@ public class JasyptConfig {
 //
 //    }
 }
+*/
