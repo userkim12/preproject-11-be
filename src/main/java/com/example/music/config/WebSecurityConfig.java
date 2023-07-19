@@ -61,11 +61,14 @@ public class WebSecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(
                         request -> request
+                                .requestMatchers(HttpMethod.GET, "api/users/mypage").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/posts", "/api/comments").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.PUT, "/api/posts/*").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "api/posts/*", "api/comments/*").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
+
+
                 );
 
         return http.build();

@@ -3,6 +3,7 @@ package com.example.music.post.entity;
 import com.example.music.audit.BaseTimeEntity;
 import com.example.music.comment.entity.Comment;
 import com.example.music.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,6 +41,7 @@ public class Post extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     public void update(Post post) {

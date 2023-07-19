@@ -2,6 +2,7 @@ package com.example.music.user.entity;
 
 import com.example.music.comment.entity.Comment;
 import com.example.music.post.entity.Post;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class User {
 
     @Column
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Post> postList = new ArrayList<>();
 
     @Column

@@ -15,6 +15,7 @@ public enum CategoryEnum {
 
 
     @Getter
+    @JsonValue
     private final String englishName;
 
     CategoryEnum(String category) {
