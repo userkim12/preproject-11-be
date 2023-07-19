@@ -21,7 +21,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    private final String ADMIN = "admin";
+    private final String ADMIN = "admin@email.com";
 
     public void signup(LoginRequestDto loginRequestDto) {
         String username = loginRequestDto.getUsername();
