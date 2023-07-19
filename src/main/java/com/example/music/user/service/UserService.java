@@ -1,13 +1,17 @@
 package com.example.music.user.service;
 
+import com.example.music.post.entity.Post;
 import com.example.music.user.dto.LoginRequestDto;
+import com.example.music.user.dto.MyPageResponseDto;
 import com.example.music.user.entity.User;
 import com.example.music.user.repository.UserRepository;
 import com.example.music.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,5 +39,11 @@ public class UserService {
         }
 
         userRepository.save(user);
+    }
+
+    public MyPageResponseDto findAll(UserDetails userDetails) {
+        String author = userDetails.getUsername();
+        User user = userRepository.findByUsername(author).orElse(null);
+        return new MyPageResponseDto(user);
     }
 }
