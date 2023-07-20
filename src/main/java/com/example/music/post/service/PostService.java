@@ -88,11 +88,11 @@ public class PostService {
     }
 
 
+    @Transactional
     public void likeUp(Long postId) {
         Post post = verifyPostExists(postId);
         post.changLikes(UP);
     }
-
 
     public void likeDown(Long postId) {
         Post post = verifyPostExists(postId);

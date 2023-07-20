@@ -52,6 +52,6 @@ public class Post extends BaseTimeEntity {
     }
 
     public void changLikes(int value) {
-        likes = value == 1 ? likes++ : likes--;
+        likes = value == 1 ? ++likes : likes--;
     }
 }
