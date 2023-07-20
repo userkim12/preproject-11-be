@@ -4,6 +4,7 @@ import com.example.music.audit.BaseTimeEntity;
 import com.example.music.comment.dto.CommentRequestDto;
 import com.example.music.post.entity.Post;
 import com.example.music.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -4,6 +4,8 @@ import com.example.music.audit.BaseTimeEntity;
 import com.example.music.comment.entity.Comment;
 import com.example.music.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +39,7 @@ public class Post extends BaseTimeEntity {
     private CategoryEnum category;
 
     @OneToMany(mappedBy = "post", orphanRemoval = true)
+    @JsonIgnore
     private List<Comment> commentList = new ArrayList<>();
 
     @ManyToOne
